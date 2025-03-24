@@ -66,3 +66,13 @@ int main() {
 
     return 0;
 }
+
+output
+Name: John
+Course: B.Tech
+Marks: 90
+Year: 2023
+
+Name: Jane
+Department: HR
+Salary: 50000
