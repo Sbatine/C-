@@ -41,3 +41,6 @@ int main(){
 
 
 OUTPUT:
+Enter nth term of the series4
+1/1^2 - 1/2^2 + 1/3^2 - 1/4^2
+Sum of 4 Terms of series = 0.798611
