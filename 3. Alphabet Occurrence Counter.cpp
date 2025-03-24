@@ -24,3 +24,15 @@ int main(int argc, char* argv[]) {
     countAlphabets(text);
     return 0;
 }
+
+
+
+output
+Alphabet frequencies:
+d: 1
+e: 1
+h: 1
+l: 3
+o: 2
+r: 1
+w: 1
