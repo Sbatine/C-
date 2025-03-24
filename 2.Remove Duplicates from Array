@@ -31,3 +31,9 @@ int main(){
     }
     
     return 0;
+
+
+
+
+OUTPUT
+1 4 6 5 7 2
