@@ -1,0 +1,82 @@
+6. Write a program to search a given element in a set of N numbers using Binary search
+(i) with recursion (ii) without recursion.
+
+#include <iostream>
+using namespace std;
+
+int binarySearchRecursive(int arr[], int low, int high, int target) {
+    if (low > high)
+        return -1;
+    int mid = low + (high - low) / 2;
+    if (arr[mid] == target)
+        return mid;
+    else if (arr[mid] > target)
+        return binarySearchRecursive(arr, low, mid - 1, target);
+    else
+        return binarySearchRecursive(arr, mid + 1, high, target);
+}
+
+int binarySearchIterative(int arr[], int n, int target) {
+    int low = 0, high = n - 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == target)
+            return mid;
+        else if (arr[mid] < target)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    return -1;
+}
+
+int main() {
+    int n, target, choice;
+    cout << "Enter number of elements: ";
+    cin >> n;
+    
+    int arr[n];
+    cout << "Enter sorted elements:\n";
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+    
+    cout << "Enter element to search: ";
+    cin >> target;
+    
+    cout << "Choose search method:\n1. Recursive\n2. Iterative\nEnter choice: ";
+    cin >> choice;
+    
+    int result = -1;
+    if (choice == 1) {
+        result = binarySearchRecursive(arr, 0, n - 1, target);
+    } else if (choice == 2) {
+        result = binarySearchIterative(arr, n, target);
+    } else {
+        cout << "Invalid choice!\n";
+        return 1;
+    }
+    
+    if (result != -1)
+        cout << "Element found at index " << result << endl;
+    else
+        cout << "Element not found\n";
+    
+    return 0;
+}
+
+
+OUTPUT:
+Enter number of elements: 7
+Enter sorted elements:
+2 4 6 8 10 12 14
+Enter element to search: 10
+Choose search method:
+1. Recursive
+2. Iterative
+Enter choice: 1
+Element found at index 4
+
+Enter choice: 2
+Element not found
+
+
