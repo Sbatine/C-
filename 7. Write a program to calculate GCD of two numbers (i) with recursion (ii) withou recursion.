@@ -1,0 +1,37 @@
+7. Write a program to calculate GCD of two numbers (i) with recursion (ii) withou recursion.
+
+#include <iostream>
+using namespace std;
+
+// Recursive function to find GCD
+int gcd_recursive(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd_recursive(b, a % b);
+}
+
+// Iterative function to find GCD
+int gcd_iterative(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int main() {
+    int num1, num2;
+    cout << "Enter two numbers: ";
+    cin >> num1 >> num2;
+
+    cout << "GCD (recursive) of " << num1 << " and " << num2 << " is " << gcd_recursive(num1, num2) << endl;
+    cout << "GCD (iterative) of " << num1 << " and " << num2 << " is " << gcd_iterative(num1, num2) << endl;
+
+    return 0;
+}
+
+OUTPUT:
+Enter two numbers: 48 18
+GCD (recursive) of 48 and 18 is 6
+GCD (iterative) of 48 and 18 is 6
