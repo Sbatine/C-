@@ -1,79 +1,76 @@
-9. Define a class Person having name as a data member. Inherit two classes Student an Employee from Person.
-Student has additional attributes as course, marks and yea and Employee has department and salary.
-Write display method in all the thre classes to display the corresponding attributes. Provide the necessary methods to shov runtime polymorphism.
 
 #include <iostream>
-#include <string>
 using namespace std;
 
 class Person {
 protected:
     string name;
 public:
-    Person(string n) : name(n) {}
-
-    // Virtual display method for runtime polymorphism
+    virtual void input() {
+        cout << "Enter name: ";
+        cin >> name;
+    }
     virtual void display() {
         cout << "Name: " << name << endl;
     }
-
-    // Virtual destructor for proper cleanup
-    virtual ~Person() {}
 };
 
 class Student : public Person {
-private:
     string course;
-    int marks;
-    int year;
+    int marks, year;
 public:
-    Student(string n, string c, int m, int y) : Person(n), course(c), marks(m), year(y) {}
-
+    void input() override {
+        Person::input();
+        cout << "Enter course, marks, year: ";
+        cin >> course >> marks >> year;
+    }
     void display() override {
-        Person::display();
-        cout << "Course: " << course << endl;
-        cout << "Marks: " << marks << endl;
-        cout << "Year: " << year << endl;
+        cout << "Student Name: " << name << "\nCourse: " << course
+             << "\nMarks: " << marks << "\nYear: " << year << endl;
     }
 };
 
 class Employee : public Person {
-private:
     string department;
     double salary;
 public:
-    Employee(string n, string d, double s) : Person(n), department(d), salary(s) {}
-
+    void input() override {
+        Person::input();
+        cout << "Enter department and salary: ";
+        cin >> department >> salary;
+    }
     void display() override {
-        Person::display();
-        cout << "Department: " << department << endl;
-        cout << "Salary: " << salary << endl;
+        cout << "Employee Name: " << name << "\nDepartment: " << department
+             << "\nSalary: " << salary << endl;
     }
 };
 
-// Function demonstrating runtime polymorphism
-void showDetails(Person* p) {
-    p->display();
-}
-
 int main() {
-    Student s("Alice", "Computer Science", 85, 3);
-    Employee e("Bob", "HR", 50000);
+    Person* p;
 
-    showDetails(&s);
-    cout << endl;
-    showDetails(&e);
+    Student s;
+    p = &s;
+    p->input();
+    p->display();
+
+    Employee e;
+    p = &e;
+    p->input();
+    p->display();
 
     return 0;
 }
 
 
 OUTPUT:
-Name: Alice
-Course: Computer Science
+Enter name: Alice
+Enter course, marks, year: BCA 85 2
+Student Name: Alice
+Course: BCA
 Marks: 85
-Year: 3
-
-Name: Bob
-Department: HR
+Year: 2
+Enter name: Bob
+Enter department and salary: IT 50000
+Employee Name: Bob
+Department: IT
 Salary: 50000
