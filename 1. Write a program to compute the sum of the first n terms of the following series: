@@ -33,5 +33,6 @@ int main(int argc, char* argv[]) {
 
 
 OUTPUT:
+
 Enter the number of terms (n): 5
 Sum of first 5 terms = 0.783451
