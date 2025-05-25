@@ -1,0 +1,25 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ifstream fin("input.txt");
+    ofstream fout("output.txt");
+
+    char ch;
+    while (fin.get(ch)) {
+        if (!isspace(ch)) {
+            fout << ch;
+        }
+    }
+
+    fin.close();
+    fout.close();
+
+    cout << "Whitespaces removed and content copied to output.txt\n";
+    return 0;
+}
+
+
+OUTPUT:
+Whitespaces removed and content copied to output.txt
