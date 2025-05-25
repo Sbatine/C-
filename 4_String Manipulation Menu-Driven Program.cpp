@@ -167,3 +167,108 @@ int main() {
     }
     return 0;
 }
+
+OUTPUT:
+1. Show address of each character in string
+2. Concatenate two strings
+3. Compare two strings
+4. Calculate length of the string
+5. Convert all lowercase characters to uppercase
+6. Reverse the string
+7. Insert a string in another string at a specified position
+8. Exit
+Enter your choice: 1
+Enter a string: hello
+Addresses of each character in the string:
+h: 0x62feac
+e: 0x62fead
+l: 0x62feae
+l: 0x62feaf
+o: 0x62feb0
+
+1. Show address of each character in string
+2. Concatenate two strings
+3. Compare two strings
+4. Calculate length of the string
+5. Convert all lowercase characters to uppercase
+6. Reverse the string
+7. Insert a string in another string at a specified position
+8. Exit
+Enter your choice: 2
+Enter first string: hello
+Enter second string: world
+Concatenated string: helloworld
+
+1. Show address of each character in string
+2. Concatenate two strings
+3. Compare two strings
+4. Calculate length of the string
+5. Convert all lowercase characters to uppercase
+6. Reverse the string
+7. Insert a string in another string at a specified position
+8. Exit
+Enter your choice: 3
+Enter first string: apple
+Enter second string: Apple
+Strings are not equal.
+
+1. Show address of each character in string
+2. Concatenate two strings
+3. Compare two strings
+4. Calculate length of the string
+5. Convert all lowercase characters to uppercase
+6. Reverse the string
+7. Insert a string in another string at a specified position
+8. Exit
+Enter your choice: 4
+Enter a string: ChatGPT
+Length of the string: 7
+
+1. Show address of each character in string
+2. Concatenate two strings
+3. Compare two strings
+4. Calculate length of the string
+5. Convert all lowercase characters to uppercase
+6. Reverse the string
+7. Insert a string in another string at a specified position
+8. Exit
+Enter your choice: 5
+Enter a string: openai
+String in uppercase: OPENAI
+
+1. Show address of each character in string
+2. Concatenate two strings
+3. Compare two strings
+4. Calculate length of the string
+5. Convert all lowercase characters to uppercase
+6. Reverse the string
+7. Insert a string in another string at a specified position
+8. Exit
+Enter your choice: 6
+Enter a string: robot
+Reversed string: tobor
+
+1. Show address of each character in string
+2. Concatenate two strings
+3. Compare two strings
+4. Calculate length of the string
+5. Convert all lowercase characters to uppercase
+6. Reverse the string
+7. Insert a string in another string at a specified position
+8. Exit
+Enter your choice: 7
+Enter main string: WelcomeHome
+Enter string to insert: Back  
+Enter position to insert: 7
+Modified string after insertion: WelcomeBackHome
+
+1. Show address of each character in string
+2. Concatenate two strings
+3. Compare two strings
+4. Calculate length of the string
+5. Convert all lowercase characters to uppercase
+6. Reverse the string
+7. Insert a string in another string at a specified position
+8. Exit
+Enter your choice: 8
+Exiting...
