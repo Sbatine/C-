@@ -33,7 +33,6 @@ int main(int argc, char* argv[]) {
 
 
 OUTPUT:
-
 Letter  Count
 --------------
 a       3
