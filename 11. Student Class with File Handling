@@ -1,0 +1,57 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Student {
+public:
+    int roll;
+    string name;
+    int year;
+    string className;
+    float totalMarks;
+
+    void input() {
+        cout << "Enter Roll, Name, Class, Year, Marks: ";
+        cin >> roll >> name >> className >> year >> totalMarks;
+    }
+
+    void display() {
+        cout << roll << " " << name << " " << className << " " << year << " " << totalMarks << endl;
+    }
+};
+
+int main() {
+    Student s[5];
+    ofstream fout("students.txt");
+
+    for (int i = 0; i < 5; i++) {
+        s[i].input();
+        fout << s[i].roll << " " << s[i].name << " " << s[i].className << " "
+             << s[i].year << " " << s[i].totalMarks << endl;
+    }
+
+    fout.close();
+
+    ifstream fin("students.txt");
+    cout << "\nReading from file:\n";
+    while (fin >> s[0].roll >> s[0].name >> s[0].className >> s[0].year >> s[0].totalMarks)
+        s[0].display();
+
+    fin.close();
+    return 0;
+}
+
+
+OUTPUT:
+Enter Roll, Name, Class, Year, Marks: 1 John BCA 2 90
+Enter Roll, Name, Class, Year, Marks: 102 Bob BBA 1 76.0
+Enter Roll, Name, Class, Year, Marks: 101 Alice BCA 2 89.5
+Enter Roll, Name, Class, Year, Marks: 104 David B.Tech 2 85.5
+Enter Roll, Name, Class, Year, Marks: 105 Eve BBA 1 78.3
+
+Reading from file:     
+1 John BCA 2 90        
+102 Bob BBA 1 76       
+101 Alice BCA 2 89.5   
+104 David B.Tech 2 85.5
+105 Eve BBA 1 78.3 
