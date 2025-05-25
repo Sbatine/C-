@@ -1,0 +1,258 @@
+4. Write a menu driven program to perform string manipulation (without using inbuilt string functions):
+a. Show address of each character in string
+b. Concatenate two strings.
+c. Compare two strings
+d. Calculate length of the string (use pointers)
+e. Convert all lowercase characters to uppercase
+f. Reverse the string
+g. Insert a string in another string at a user specified position
+
+#include <iostream>
+using namespace std;
+
+// Function prototypes
+void showAddresses(char *str);
+void concatenate(char *str1, char *str2);
+int compare(char *str1, char *str2);
+int length(char *str);
+void toUppercase(char *str);
+void reverse(char *str);
+void insertString(char *str1, char *str2, int pos);
+
+int main() {
+    char str1[200], str2[100];
+    int choice;
+
+    while (true) {
+        cout << "\nString Manipulation Menu:\n";
+        cout << "1. Show address of each character in string\n";
+        cout << "2. Concatenate two strings\n";
+        cout << "3. Compare two strings\n";
+        cout << "4. Calculate length of the string\n";
+        cout << "5. Convert all lowercase characters to uppercase\n";
+        cout << "6. Reverse the string\n";
+        cout << "7. Insert a string in another string at a specified position\n";
+        cout << "8. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore(); // to consume newline after choice input
+
+        switch (choice) {
+            case 1:
+                cout << "Enter a string: ";
+                cin.getline(str1, 200);
+                showAddresses(str1);
+                break;
+
+            case 2:
+                cout << "Enter first string: ";
+                cin.getline(str1, 200);
+                cout << "Enter second string: ";
+                cin.getline(str2, 100);
+                concatenate(str1, str2);
+                cout << "Concatenated string: " << str1 << "\n";
+                break;
+
+            case 3:
+                cout << "Enter first string: ";
+                cin.getline(str1, 200);
+                cout << "Enter second string: ";
+                cin.getline(str2, 100);
+                {
+                    int cmp = compare(str1, str2);
+                    if (cmp == 0) cout << "Strings are equal.\n";
+                    else if (cmp < 0) cout << "First string is less than second string.\n";
+                    else cout << "First string is greater than second string.\n";
+                }
+                break;
+
+            case 4:
+                cout << "Enter a string: ";
+                cin.getline(str1, 200);
+                cout << "Length of the string: " << length(str1) << "\n";
+                break;
+
+            case 5:
+                cout << "Enter a string: ";
+                cin.getline(str1, 200);
+                toUppercase(str1);
+                cout << "Uppercase string: " << str1 << "\n";
+                break;
+
+            case 6:
+                cout << "Enter a string: ";
+                cin.getline(str1, 200);
+                reverse(str1);
+                cout << "Reversed string: " << str1 << "\n";
+                break;
+
+            case 7:
+                cout << "Enter main string: ";
+                cin.getline(str1, 200);
+                cout << "Enter string to insert: ";
+                cin.getline(str2, 100);
+                cout << "Enter position to insert at (starting from 0): ";
+                int pos; cin >> pos;
+                cin.ignore();
+                insertString(str1, str2, pos);
+                cout << "String after insertion: " << str1 << "\n";
+                break;
+
+            case 8:
+                cout << "Exiting...\n";
+                return 0;
+
+            default:
+                cout << "Invalid choice! Try again.\n";
+        }
+    }
+    return 0;
+}
+
+// Show address of each character in string
+void showAddresses(char *str) {
+    for (int i = 0; *(str + i) != '\0'; i++) {
+        cout << "Character: '" << *(str + i) << "' Address: " << (void*)(str + i) << "\n";
+    }
+}
+
+// Concatenate str2 at the end of str1
+void concatenate(char *str1, char *str2) {
+    int i = 0;
+    while (*(str1 + i) != '\0') i++; // find end of str1
+    int j = 0;
+    while (*(str2 + j) != '\0') {
+        *(str1 + i) = *(str2 + j);
+        i++; j++;
+    }
+    *(str1 + i) = '\0'; // terminate
+}
+
+// Compare two strings
+int compare(char *str1, char *str2) {
+    int i = 0;
+    while (*(str1 + i) != '\0' && *(str2 + i) != '\0') {
+        if (*(str1 + i) != *(str2 + i))
+            return *(str1 + i) - *(str2 + i);
+        i++;
+    }
+    // if one ended
+    return *(str1 + i) - *(str2 + i);
+}
+
+// Calculate length of string using pointers
+int length(char *str) {
+    int len = 0;
+    while (*(str + len) != '\0')
+        len++;
+    return len;
+}
+
+// Convert lowercase characters to uppercase
+void toUppercase(char *str) {
+    for (int i = 0; *(str + i) != '\0'; i++) {
+        if (*(str + i) >= 'a' && *(str + i) <= 'z') {
+            *(str + i) = *(str + i) - ('a' - 'A');
+        }
+    }
+}
+
+// Reverse the string in-place
+void reverse(char *str) {
+    int len = length(str);
+    int start = 0, end = len - 1;
+    while (start < end) {
+        char temp = *(str + start);
+        *(str + start) = *(str + end);
+        *(str + end) = temp;
+        start++;
+        end--;
+    }
+}
+
+// Insert str2 into str1 at position pos
+void insertString(char *str1, char *str2, int pos) {
+    int len1 = length(str1);
+    int len2 = length(str2);
+
+    if (pos > len1) {
+        cout << "Position is beyond the length of main string. Appending at the end.\n";
+        pos = len1;
+    }
+
+    // Shift characters in str1 to the right to make space for str2
+    for (int i = len1 - 1; i >= pos; i--) {
+        *(str1 + i + len2) = *(str1 + i);
+    }
+
+    // Copy str2 into str1 starting from pos
+    for (int i = 0; i < len2; i++) {
+        *(str1 + pos + i) = *(str2 + i);
+    }
+
+    // Null terminate the new string
+    *(str1 + len1 + len2) = '\0';
+}
+
+
+OUTPUT:
+String Manipulation Menu:
+1. Show address of each character in string
+2. Concatenate two strings
+3. Compare two strings
+4. Calculate length of the string
+5. Convert all lowercase characters to uppercase
+6. Reverse the string
+7. Insert a string in another string at a specified position
+8. Exit
+Enter your choice: 1
+Enter a string: Hello
+
+Character: 'H' Address: 0x7ffeeecdcc40
+Character: 'e' Address: 0x7ffeeecdcc41
+Character: 'l' Address: 0x7ffeeecdcc42
+Character: 'l' Address: 0x7ffeeecdcc43
+Character: 'o' Address: 0x7ffeeecdcc44
+
+Enter your choice: 2
+Enter first string: Hello
+Enter second string: World
+
+Concatenated string: HelloWorld
+
+Enter your choice: 3
+Enter first string: Apple
+Enter second string: Apple
+
+Strings are equal.
+
+Enter your choice: 3
+Enter first string: Apple
+Enter second string: Banana
+
+First string is less than second string.
+
+Enter your choice: 4
+Enter a string: Programming
+
+Length of the string: 11
+
+Enter your choice: 5
+Enter a string: hello World
+
+Uppercase string: HELLO WORLD
+
+Enter your choice: 6
+Enter a string: Hello
+
+Reversed string: olleH
+
+Enter your choice: 7
+Enter main string: HelloWorld
+Enter string to insert: Cpp
+Enter position to insert at (starting from 0): 5
+
+String after insertion: HelloCppWorld
+
+Enter your choice: 8
+Exiting...
