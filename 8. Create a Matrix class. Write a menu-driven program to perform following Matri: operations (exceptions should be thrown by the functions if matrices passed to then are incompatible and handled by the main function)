@@ -1,0 +1,271 @@
+8. Create a Matrix class. Write a menu-driven program to perform following Matri: operations (exceptions should be thrown by the functions if matrices passed to then are incompatible and handled by the main function):
+a. Sum
+b. Product
+c. Transpose
+    
+
+#include <iostream>
+#include <vector>
+#include <stdexcept>
+
+using namespace std;
+
+class Matrix {
+private:
+    vector<vector<int>> data;
+    int rows, cols;
+
+public:
+    Matrix(int r, int c) : rows(r), cols(c) {
+        data.resize(rows, vector<int>(cols, 0));
+    }
+
+    Matrix(const vector<vector<int>>& d) : data(d), rows(d.size()), cols(d[0].size()) {}
+
+    int getRows() const { return rows; }
+    int getCols() const { return cols; }
+
+    int& at(int r, int c) {
+        if (r < 0 || r >= rows || c < 0 || c >= cols)
+            throw out_of_range("Index out of range");
+        return data[r][c];
+    }
+
+    const int& at(int r, int c) const {
+        if (r < 0 || r >= rows || c < 0 || c >= cols)
+            throw out_of_range("Index out of range");
+        return data[r][c];
+    }
+
+    Matrix operator+(const Matrix& other) const {
+        if (rows != other.rows || cols != other.cols)
+            throw invalid_argument("Matrices must have the same dimensions to add.");
+
+        Matrix result(rows, cols);
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                result.at(i, j) = data[i][j] + other.at(i, j);
+        return result;
+    }
+
+    Matrix operator*(const Matrix& other) const {
+        if (cols != other.rows)
+            throw invalid_argument("Number of columns of first matrix must equal number of rows of second.");
+
+        Matrix result(rows, other.cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < other.cols; j++) {
+                int sum = 0;
+                for (int k = 0; k < cols; k++) {
+                    sum += data[i][k] * other.at(k, j);
+                }
+                result.at(i, j) = sum;
+            }
+        }
+        return result;
+    }
+
+    Matrix transpose() const {
+        Matrix result(cols, rows);
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                result.at(j, i) = data[i][j];
+        return result;
+    }
+
+    void display() const {
+        for (const auto& row : data) {
+            for (int val : row)
+                cout << val << "\t";
+            cout << endl;
+        }
+    }
+};
+
+Matrix inputMatrix() {
+    int r, c;
+    cout << "Enter number of rows: ";
+    cin >> r;
+    cout << "Enter number of columns: ";
+    cin >> c;
+    vector<vector<int>> mat(r, vector<int>(c));
+    cout << "Enter matrix elements row-wise:" << endl;
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cin >> mat[i][j];
+        }
+    }
+    return Matrix(mat);
+}
+
+int main() {
+    int choice;
+    Matrix m1(0,0), m2(0,0);
+    bool matricesEntered = false;
+
+    while (true) {
+        cout << "\nMenu:\n"
+             << "1. Input matrices\n"
+             << "2. Sum of matrices\n"
+             << "3. Product of matrices\n"
+             << "4. Transpose of a matrix\n"
+             << "5. Exit\n"
+             << "Enter your choice: ";
+        cin >> choice;
+
+        try {
+            switch (choice) {
+                case 1:
+                    cout << "Input Matrix 1:" << endl;
+                    m1 = inputMatrix();
+                    cout << "Input Matrix 2:" << endl;
+                    m2 = inputMatrix();
+                    matricesEntered = true;
+                    break;
+
+                case 2:
+                    if (!matricesEntered) {
+                        cout << "Please input matrices first." << endl;
+                        break;
+                    }
+                    cout << "Sum of matrices:" << endl;
+                    (m1 + m2).display();
+                    break;
+
+                case 3:
+                    if (!matricesEntered) {
+                        cout << "Please input matrices first." << endl;
+                        break;
+                    }
+                    cout << "Product of matrices:" << endl;
+                    (m1 * m2).display();
+                    break;
+
+                case 4:
+                    if (!matricesEntered) {
+                        cout << "Please input matrices first." << endl;
+                        break;
+                    }
+                    int matrixNum;
+                    cout << "Transpose Matrix (1 or 2): ";
+                    cin >> matrixNum;
+                    if (matrixNum == 1) {
+                        cout << "Transpose of Matrix 1:" << endl;
+                        m1.transpose().display();
+                    } else if (matrixNum == 2) {
+                        cout << "Transpose of Matrix 2:" << endl;
+                        m2.transpose().display();
+                    } else {
+                        cout << "Invalid matrix number." << endl;
+                    }
+                    break;
+
+                case 5:
+                    cout << "Exiting..." << endl;
+                    return 0;
+
+                default:
+                    cout << "Invalid choice! Try again." << endl;
+            }
+        } catch (const exception& e) {
+            cout << "Error: " << e.what() << endl;
+        }
+    }
+
+    return 0;
+}
+
+OUTPUT:
+Menu:
+1. Input matrices
+2. Sum of matrices
+3. Product of matrices
+4. Transpose of a matrix
+5. Exit
+Enter your choice: 1
+Input Matrix 1:
+Enter number of rows: 2
+Enter number of columns: 3
+Enter matrix elements row-wise:
+1 2 3
+4 5 6
+Input Matrix 2:
+Enter number of rows: 2
+Enter number of columns: 3
+Enter matrix elements row-wise:
+6 5 4
+3 2 1
+
+Menu:
+1. Input matrices
+2. Sum of matrices
+3. Product of matrices
+4. Transpose of a matrix
+5. Exit
+Enter your choice: 2
+Sum of matrices:
+7	7	7	
+7	7	7	
+
+Menu:
+1. Input matrices
+2. Sum of matrices
+3. Product of matrices
+4. Transpose of a matrix
+5. Exit
+Enter your choice: 3
+Error: Number of columns of first matrix must equal number of rows of second.
+
+Menu:
+1. Input matrices
+2. Sum of matrices
+3. Product of matrices
+4. Transpose of a matrix
+5. Exit
+Enter your choice: 1
+Input Matrix 1:
+Enter number of rows: 2
+Enter number of columns: 3
+Enter matrix elements row-wise:
+1 2 3
+4 5 6
+Input Matrix 2:
+Enter number of rows: 3
+Enter number of columns: 2
+Enter matrix elements row-wise:
+7 8
+9 10
+11 12
+
+Menu:
+1. Input matrices
+2. Sum of matrices
+3. Product of matrices
+4. Transpose of a matrix
+5. Exit
+Enter your choice: 3
+Product of matrices:
+58	64	
+139	154	
+
+Menu:
+1. Input matrices
+2. Sum of matrices
+3. Product of matrices
+4. Transpose of a matrix
+5. Exit
+Enter your choice: 4
+Transpose Matrix (1 or 2): 1
+Transpose of Matrix 1:
+1	4	
+2	5	
+3	6	
+
+Menu:
+1. Input matrices
+2. Sum of matrices
+3. Product of matrices
+4. Transpose of a matrix
+5. Exit
+Enter your choice: 5
+Exiting...
